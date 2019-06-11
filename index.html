@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        div {
+            height: 300px;
+            width: 300px;
+            border: 1px solid black;
+            position: absolute;
+            left: 45vw;
+            top: 45vh;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="async"></div>
+    <!-- <div id="async2"></div> -->
+    <button id="myButton">Stop animations</button>
+    <script>
+        // for (var i = 0; i < 1000; i++) {
+        //     document.querySelector("#async").style.left = `${i}px`
+        // }
+
+        // let i = 0;
+        // let intervalID = setInterval(() => {
+        //     // if (i > 200) {
+
+        //     // }
+        //     document.querySelector("#async").style.left = `${i++}px`
+        //     document.querySelector("#async").style.transform = `rotate(${i}deg)`
+        // }, 10)
+
+
+        // let i2 = 0;
+        // let intervalID2 = setInterval(() => {
+        //     // if (i2 > 700) {
+
+        //     // }
+        //     document.querySelector("#async2").style.left = `${i2+=0.1}px`
+        //     document.querySelector("#async2").style.transform = `rotate(${i2}deg)`
+        // }, 10)
+
+        // document.querySelector("#myButton").onclick = function () {
+        //     console.log("stop animations")
+        //     clearInterval(intervalID)
+        //     clearInterval(intervalID2)
+        // }
+
+        var angle = 0
+        document.querySelector("#myButton").onclick = function () {
+            document.querySelector("#myButton").setAttribute("disabled", "disabled")
+            setTimeout(() => {
+                // var start = new Date().getTime();
+                console.time("div rotation");
+
+                angle += 10
+                document.querySelector("#async").style.transform = `rotate(${angle}deg)`
+
+                // var end = new Date().getTime();
+
+                // console.log(end - start)
+                console.timeEnd("div rotation");
+
+                // }, Math.random() * 2000)
+            }, 500)
+        }
+
+        function rotateCounterwise(cb) {
+            let angle = 0
+
+            let intervalID = setInterval(() => {
+                if (angle > 350) {
+                    clearInterval(intervalID)
+
+                    if (cb !== undefined) cb()
+                }
+
+                document.querySelector("#async").style.transform = `rotate(${angle += 5}deg)`
+            }, 10)
+        }
+
+        function rotateCounterclockwise(cb) {
+            let angle = 350
+
+            let intervalID = setInterval(() => {
+                if (angle < 10) {
+                    clearInterval(intervalID)
+
+                    if (cb !== undefined) cb()
+                }
+
+                document.querySelector("#async").style.transform = `rotate(${angle -= 5}deg)`
+            }, 10)
+        }
+
+        // setInterval(() => {
+        //     rotateCounterclockwise(rotateCounterwise)
+        // }, 2000)
+
+        // rotateCounterclockwise(rotateCounterwise)
+        // rotateCounterwise(rotateCounterclockwise)
+        // rotateCounterwise()
+        // rotateCounterclockwise(function (){
+        //     console.log([1,2,3,4].map(x=>x*2))
+        // })
+
+
+
+    </script>
+</body>
+
+</html>
